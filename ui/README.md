@@ -65,6 +65,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
+<<<<<<< HEAD
 ### `npm run build` fails to minify
+=======
+### `yarn build` fails to minify
+>>>>>>> 778e3a63c4051a0a6e3061baf9239dacd450af4a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

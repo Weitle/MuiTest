@@ -1,18 +1,12 @@
 import './App.css';
-import AppBarTest from './components/AppBarTest';
-import BoxTest from './components/BoxTest';
-import ButtonTest from './components/ButtonTest';
-import GridTest from './components/GridTest';
-import LinkTest from './components/LinkTest';
+import Contents from './components/Contents';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div className="App">
-      <AppBarTest />
-      <ButtonTest />
-      <BoxTest />
-      <GridTest />
-      <LinkTest />
+      <Navbar />
+      <Contents />
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { ButtonGroup, Button, makeStyles, Grid, Popper } from '@material-ui/core';
-import React, {useState} from 'react';
+import { ButtonGroup, Button, makeStyles, Grid, Popper, Grow, Paper, MenuItem, MenuList, ClickAwayListener } from '@material-ui/core';
+import React, {useRef, useState} from 'react';
 import { green } from '@material-ui/core/colors';
 import { ArrowDropDown } from '@material-ui/icons';
 
@@ -31,6 +31,7 @@ const options = [
 const ButtonGroupTest = () => {
 	const classes = useStyle();
 	const [open, setOpen] = useState(false);
+	const anchorRef = useRef(null);
 	const [selectedIndex, setSelectedIndex] = useState(1);
 
 	const handleClick = ()=>{
@@ -39,6 +40,17 @@ const ButtonGroupTest = () => {
 	const handleToggle = ()=>{
 		setOpen((prevOpen)=>!prevOpen);
 	}
+	const handleMenuItemClick = (event, index)=>{
+		setSelectedIndex(index);
+		setOpen(false);
+	}
+	const handleClose = (event)=>{
+		if(anchorRef.current && anchorRef.current.contains(event.target)){
+			return;
+		}
+		setOpen(false);
+	}
+
 	return (
 		<React.Fragment>
 			<h1>基本按钮组</h1>
@@ -98,15 +110,15 @@ const ButtonGroupTest = () => {
 			<h1>分体式按钮</h1>
 			<Grid container direction="column" alignItems="center">
 				<Grid item xs={12}>
-					<ButtonGroup variant="contained" >
-						<Button 
-							style={{backgroundColor: green[500], color: 'white'}}
+					<ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+						<Button
+							style={{backgroundColor: green[500], color: 'white'}} 
 							onClick={handleClick}
 						>
 							{options[selectedIndex]}
 						</Button>
 						<Button
-							style={{backgroundColor: green[500], color: 'white'}}
+							style={{backgroundColor: green[500], color: 'white'}} 
 							aria-controls={open ? 'split-button-menu' : undefined}
 							aria-expanded={open? 'true' : undefined}
 							aria-label="select merge strategy"
@@ -116,7 +128,33 @@ const ButtonGroupTest = () => {
 							<ArrowDropDown />
 						</Button>
 					</ButtonGroup>
-
+					<Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+					{({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+              }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList id="split-button-menu">
+                    {options.map((option, index) => (
+                      <MenuItem
+                        key={option}
+                        disabled={index === 2}
+                        selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, index)}
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+					</Popper>
 				</Grid>
 			</Grid>
 
